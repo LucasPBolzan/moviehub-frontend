@@ -37,10 +37,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #2a2a2a;
-  padding: 10px 20px;
+  background-color: black;
+  padding: 20px 40px; /* aumentou o espaçamento interno */
+  height: 80px; /* altura fixa aumentada */
   z-index: 1000;
 }
+
 
 .logo {
   display: flex;
@@ -48,19 +50,20 @@ export default {
 }
 
 .logo img {
-  width: 30px;
-  margin-right: 10px;
+  width: 40px;
+  margin-right: 12px;
 }
 
 .logo span {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
   color: white;
 }
 
 nav a, nav router-link {
   color: white;
-  margin: 0 15px;
+  margin: 0 20px;
+  font-size: 18px;
   text-decoration: none;
 }
 
@@ -69,18 +72,20 @@ nav router-link.active {
 }
 
 .search input {
-  padding: 5px;
-  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
   border: none;
   background-color: #3a3a3a;
   color: white;
 }
 
 .genres select {
-  padding: 5px;
-  border-radius: 5px;
   background-color: #3a3a3a;
   color: white;
   border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
 }
 </style>

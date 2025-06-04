@@ -23,12 +23,12 @@ export default {
 <style>
 .app {
   font-family: Arial, sans-serif;
-  background-color: #1a1a1a;
+  background-color: black;
   color: white;
   min-height: 100vh;
 }
 
 main {
-  margin-top: 60px;
+  margin-top: 110px;
 }
 </style>
