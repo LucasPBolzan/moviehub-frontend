@@ -2,7 +2,7 @@
   <header class="header">
     <div class="logo">
       <img src="@/assets/logo.png" alt="MovieCatalog Logo" />
-      <span>MovieCatalog</span>
+      <span>MovieHub</span>
     </div>
     <nav>
       <router-link to="/" class="active">Filmes</router-link>

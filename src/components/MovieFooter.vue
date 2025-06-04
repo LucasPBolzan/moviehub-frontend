@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2024 MovieCatalog. Todos os direitos reservados.</p>
+      <p>© 2025 MovieHub. Todos os direitos reservados.</p>
     </div>
   </footer>
 </template>
