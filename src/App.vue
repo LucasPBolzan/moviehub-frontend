@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div id="app" class="app">
     <MovieHeader />
     <main>
       <router-view />
@@ -21,14 +21,30 @@ export default {
 </script>
 
 <style>
-.app {
-  font-family: Arial, sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
   background-color: black;
   color: white;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.app {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-  margin-top: 110px;
+  flex: 1;
+  margin-top: 110px; 
 }
 </style>
