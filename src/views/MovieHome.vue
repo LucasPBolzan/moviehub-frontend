@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <!-- Teste Simples -->
-    <h1>Teste: Página Inicial</h1>
+
 
     <!-- Banner -->
     <section class="banner">
@@ -58,58 +57,92 @@ export default {
   }
 }
 </script>
-
 <style scoped>
-.home {
-  padding: 20px;
+.banner {
+  background: linear-gradient(to right, #0f0f0f, #444);
+  color: white;
+  display: flex;
+  align-items: center;
+  min-height: 50vh;
+  padding: 60px 80px;
+  position: relative;
+  text-align: left;
 }
 
-.banner {
-  background: linear-gradient(to right, #333, #666);
-  padding: 40px;
-  border-radius: 10px;
-  margin-bottom: 20px;
+.banner-content {
+  max-width: 700px;
+  margin-left: 0;
 }
+
 
 .banner-content h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
+  font-size: 90px; 
+  font-weight: bold;
+  margin-bottom: 24px; 
+  line-height: 1.1;
 }
 
-.movie-info span {
-  margin-right: 10px;
+.movie-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px; 
+  margin-bottom: 18px;
+  font-size: 20px; 
 }
 
 .movie-info .rating {
   color: gold;
+  font-weight: bold;
 }
 
 .movie-info .genre {
-  background-color: #444;
-  padding: 2px 8px;
-  border-radius: 5px;
+  background-color: #1e1e1e;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.banner-content p {
+  margin-top: 15px;
+  font-size: 20px; 
+  line-height: 1.7;
+  color: #ccc;
+  max-width: 95%;
 }
 
 .actions {
-  margin-top: 20px;
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .play-btn {
   background-color: red;
   color: white;
-  padding: 10px 20px;
+  padding: 14px 26px; /* <- botão maior */
   border: none;
-  border-radius: 5px;
-  margin-right: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .fav-btn, .details-btn {
   background-color: transparent;
   color: white;
   border: 1px solid white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  margin-right: 10px;
+  padding: 14px 26px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.catalog {
+  padding: 40px 60px;
+  background-color: #000;
 }
 
 .catalog h2 {

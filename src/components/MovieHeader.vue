@@ -38,8 +38,8 @@ export default {
   align-items: center;
   justify-content: space-between;
   background-color: black;
-  padding: 20px 40px; /* aumentou o espaçamento interno */
-  height: 80px; /* altura fixa aumentada */
+  padding: 20px 40px; 
+  height: 80px; 
   z-index: 1000;
 }
 
