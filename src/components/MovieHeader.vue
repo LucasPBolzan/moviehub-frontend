@@ -9,7 +9,8 @@
         </div>
         <nav class="nav-links">
           <router-link to="/" active-class="active">Filmes</router-link>
-          <router-link to="/favorites">Favoritos (0)</router-link>
+          <router-link to="/favorites" active-class="active">Favoritos (0)</router-link>
+          <router-link to="/register" active-class="active">Registrar</router-link>
         </nav>
       </div>
 
@@ -25,10 +26,11 @@
             <option>Drama</option>
           </select>
         </div>
-        <div class="user-icon">
-          <span>👤</span>
-        </div>
+        <router-link to="/login" class="user-icon" title="Entrar">
+          👤
+        </router-link>
       </div>
+
     </div>
   </header>
 </template>
@@ -45,18 +47,19 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  background-color: black;
-  height: 100px;
+  background: linear-gradient(to right, #000000, #121212);
+  height: 90px;
   display: flex;
   align-items: center;
   z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .header-container {
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 80px; 
+  padding: 0 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,29 +74,36 @@ export default {
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .logo img {
-  width: 44px;
+  width: 40px;
 }
 
 .logo span {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: bold;
   color: white;
+  transition: color 0.3s;
 }
 
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: 28px;
 }
 
 .nav-links a {
-  color: white;
-  font-size: 20px;
+  color: #ddd;
+  font-size: 18px;
   text-decoration: none;
   padding-bottom: 4px;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #e50914;
+  border-bottom: 2px solid #e50914;
 }
 
 .nav-links a.active {
@@ -102,27 +112,44 @@ export default {
 }
 
 .search input {
-  padding: 12px 16px;
-  font-size: 17px;
+  padding: 10px 16px;
+  font-size: 16px;
   border-radius: 6px;
   border: none;
   background-color: #1f1f1f;
   color: white;
-  width: 220px;
+  width: 200px;
+  transition: background 0.3s ease;
+}
+
+.search input:focus {
+  background-color: #2a2a2a;
+  outline: none;
 }
 
 .genres select {
   background-color: #1f1f1f;
   color: white;
   border: none;
-  padding: 12px 16px;
-  font-size: 17px;
+  padding: 10px 14px;
+  font-size: 16px;
   border-radius: 6px;
+  transition: background 0.3s;
 }
 
-.user-icon span {
+.genres select:hover {
+  background-color: #2a2a2a;
+}
+
+.user-icon {
   color: white;
   font-size: 24px;
   cursor: pointer;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.user-icon:hover {
+  color: #e50914;
 }
 </style>
