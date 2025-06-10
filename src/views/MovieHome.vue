@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-
-
-    <!-- Banner -->
     <section class="banner">
       <div class="banner-content">
         <h1>Dune: Part Two</h1>
@@ -25,7 +22,6 @@
       </div>
     </section>
 
-    <!-- Catálogo de Filmes -->
     <section class="catalog">
       <h2>Catálogo de Filmes</h2>
       <div class="movie-grid">
@@ -121,7 +117,7 @@ export default {
 .play-btn {
   background-color: red;
   color: white;
-  padding: 14px 26px; /* <- botão maior */
+  padding: 14px 26px; 
   border: none;
   border-radius: 6px;
   font-weight: bold;
