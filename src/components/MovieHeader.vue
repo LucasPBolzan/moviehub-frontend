@@ -9,7 +9,9 @@
         </div>
         <nav class="nav-links">
           <router-link to="/" active-class="active">Filmes</router-link>
-          <router-link to="/favorites" active-class="active">Favoritos (0)</router-link>
+          <router-link to="/favorites" active-class="active">
+            Favoritos ({{ totalFavorites }})
+          </router-link>
           <router-link to="/register" active-class="active">Registrar</router-link>
         </nav>
       </div>
@@ -36,8 +38,18 @@
 </template>
 
 <script>
+import { useFavoritesStore } from '@/stores/favorites'
+import { computed } from 'vue'
+
 export default {
-  name: 'MovieHeader'
+  name: 'MovieHeader',
+  setup() {
+    const favStore = useFavoritesStore()
+
+    const totalFavorites = computed(() => favStore.favorites.length)
+
+    return { totalFavorites }
+  }
 }
 </script>
 
