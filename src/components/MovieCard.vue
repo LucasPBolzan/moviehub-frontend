@@ -5,7 +5,7 @@
     <p>{{ movie.year }}</p>
     <p class="rating">★ {{ movie.rating }}</p>
     <p>{{ movie.genres.join(', ') }}</p>
-    <button class="fav-btn">♥</button>
+    <button class="fav-btn" :class="{ favorited: isFavorited }" @click="toggleFavorite">♥</button>
   </div>
 </template>
 
@@ -16,6 +16,16 @@ export default {
     movie: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      isFavorited: false
+    }
+  },
+  methods: {
+    toggleFavorite() {
+      this.isFavorited = !this.isFavorited;
     }
   }
 }
@@ -61,5 +71,10 @@ p {
   font-size: 20px;
   color: #ccc;
   cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.fav-btn.favorited {
+  color: red;
 }
 </style>
