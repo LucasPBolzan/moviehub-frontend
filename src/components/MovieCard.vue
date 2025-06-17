@@ -5,11 +5,14 @@
     <p>{{ movie.year }}</p>
     <p class="rating">★ {{ movie.rating }}</p>
     <p>{{ movie.genres.join(', ') }}</p>
-    <button class="fav-btn" :class="{ favorited: isFavorited }" @click="toggleFavorite">♥</button>
+    <button class="fav-btn" :class="{ favorited: isFavorited }" @click="toggle">♥</button>
   </div>
 </template>
 
 <script>
+import { useFavoritesStore } from '@/stores/favorites'
+import { computed } from 'vue'
+
 export default {
   name: 'MovieCard',
   props: {
@@ -18,15 +21,20 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      isFavorited: false
+  setup(props) {
+    const favStore = useFavoritesStore()
+
+    // Computado: verifica se o filme atual está favoritado
+    const isFavorited = computed(() =>
+      favStore.isFavorited(props.movie.id)
+    )
+
+    // Alterna o favorito no store
+    const toggle = () => {
+      favStore.toggleFavorite(props.movie)
     }
-  },
-  methods: {
-    toggleFavorite() {
-      this.isFavorited = !this.isFavorited;
-    }
+
+    return { isFavorited, toggle }
   }
 }
 </script>
