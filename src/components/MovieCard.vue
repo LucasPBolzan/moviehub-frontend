@@ -1,11 +1,26 @@
 <template>
   <div class="movie-card">
-    <div class="placeholder-image"></div>
-    <h3>{{ movie.title }}</h3>
-    <p>{{ movie.year }}</p>
-    <p class="rating">★ {{ movie.rating }}</p>
-    <p>{{ movie.genres.join(', ') }}</p>
-    <button class="fav-btn" :class="{ favorited: isFavorited }" @click="toggle">♥</button>
+    <div class="card-header">
+      <div class="poster">
+        <img :src="movie.poster || ''" alt="Poster" />
+        <button class="fav-btn" :class="{ favorited: isFavorited }" @click="toggle">
+          ♥
+        </button>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <h3>{{ movie.title }}</h3>
+      <p class="year-rating">
+        {{ movie.year }}
+        <span class="rating">★ {{ movie.rating }}</span>
+      </p>
+      <div class="genres">
+        <span v-for="genre in movie.genres" :key="genre" class="genre-tag">
+          {{ genre }}
+        </span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,12 +39,10 @@ export default {
   setup(props) {
     const favStore = useFavoritesStore()
 
-    // Computado: verifica se o filme atual está favoritado
     const isFavorited = computed(() =>
       favStore.isFavorited(props.movie.id)
     )
 
-    // Alterna o favorito no store
     const toggle = () => {
       favStore.toggleFavorite(props.movie)
     }
@@ -41,48 +54,89 @@ export default {
 
 <style scoped>
 .movie-card {
-  position: relative;
-  background-color: #2a2a2a;
-  padding: 10px;
+  background-color: #10131a;
   border-radius: 10px;
-  text-align: left;
+  overflow: hidden;
+  width: 180px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease;
+}
+.movie-card:hover {
+  transform: scale(1.03);
 }
 
-.placeholder-image {
+.card-header {
+  position: relative;
+}
+
+.poster {
+  height: 240px;
+  background-color: #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.poster img {
   width: 100%;
-  height: 150px;
-  background-color: #444;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-h3 {
-  font-size: 18px;
-  margin: 5px 0;
-}
-
-p {
-  margin: 5px 0;
-  color: #ccc;
-}
-
-.rating {
-  color: gold;
+  height: 100%;
+  object-fit: cover;
 }
 
 .fav-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.6);
   border: none;
-  font-size: 20px;
   color: #ccc;
+  font-size: 20px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   transition: color 0.2s ease;
 }
-
 .fav-btn.favorited {
   color: red;
+}
+
+.card-footer {
+  padding: 10px;
+  background-color: #0d1117;
+}
+
+h3 {
+  font-size: 15px;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.year-rating {
+  font-size: 14px;
+  color: #aaa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating {
+  color: #f7c948;
+  font-weight: bold;
+}
+
+.genres {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.genre-tag {
+  border: 1px solid #3c3c3c;
+  color: #ccc;
+  padding: 2px 6px;
+  font-size: 12px;
+  border-radius: 5px;
 }
 </style>

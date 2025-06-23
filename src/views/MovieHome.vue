@@ -22,34 +22,19 @@
       </div>
     </section>
 
-    <section class="catalog">
-      <h2>Catálogo de Filmes</h2>
-      <div class="movie-grid">
-        <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" />
-      </div>
-    </section>
+    <MovieCarousel title="Filmes Populares" />
+    <MovieCarousel title="Lançamentos" />
+    <MovieCarousel title="Clássicos" />
   </div>
 </template>
 
 <script>
-import MovieCard from '@/components/MovieCard.vue'
+import MovieCarousel from '@/components/MovieCarousel.vue'
 
 export default {
   name: 'MovieHome',
   components: {
-    MovieCard
-  },
-  data() {
-    return {
-      movies: [
-        { id: 1, title: 'Dune: Part Two', year: 2024, rating: 8.5, genres: ['Sci-Fi', 'Adventure'] },
-        { id: 2, title: 'Oppenheimer', year: 2023, rating: 8.3, genres: ['Biography', 'Drama'] },
-        { id: 3, title: 'Barbie', year: 2023, rating: 7.0, genres: ['Comedy'] },
-        { id: 4, title: 'Spider-Man: Across the Spider-Verse', year: 2023, rating: 8.7, genres: ['Animation', 'Action'] },
-        { id: 5, title: 'John Wick: Chapter 4', year: 2023, rating: 7.7, genres: ['Action', 'Thriller'] },
-        { id: 6, title: 'Avatar: The Way of Water', year: 2022, rating: 7.6, genres: ['Sci-Fi', 'Adventure'] }
-      ]
-    }
+    MovieCarousel
   }
 }
 </script>
@@ -136,19 +121,8 @@ export default {
   cursor: pointer;
 }
 
-.catalog {
-  padding: 40px 60px;
+.home {
   background-color: #000;
-}
-
-.catalog h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.movie-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  padding-bottom: 40px;
 }
 </style>
