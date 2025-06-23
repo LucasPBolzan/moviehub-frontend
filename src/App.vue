@@ -1,8 +1,8 @@
 <template>
   <div id="app" class="app">
-    <MovieHeader />
+    <MovieHeader @search="updateSearch" />
     <main>
-      <router-view />
+      <router-view :searchFilters="searchFilters" />
     </main>
     <MovieFooter />
   </div>
@@ -11,11 +11,27 @@
 <script>
 import MovieHeader from './components/MovieHeader.vue'
 import MovieFooter from './components/MovieFooter.vue'
+import { ref } from 'vue'
 
 export default {
   components: {
     MovieHeader,
     MovieFooter
+  },
+  setup() {
+    const searchFilters = ref({
+      query: '',
+      genres: []
+    })
+
+    const updateSearch = (filters) => {
+      searchFilters.value = filters
+    }
+
+    return {
+      searchFilters,
+      updateSearch
+    }
   }
 }
 </script>

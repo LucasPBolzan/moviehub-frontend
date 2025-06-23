@@ -26,12 +26,16 @@ export default {
     title: {
       type: String,
       default: 'Filmes'
+    },
+    searchFilters: {
+      type: Object,
+      default: () => ({ query: '', genres: [] })
     }
   },
   data() {
     return {
       // será substituido por dados da API
-      movies: [
+      allMovies: [
         {
           id: 1,
           title: 'Dune: Part Two',
@@ -153,6 +157,30 @@ export default {
           poster: 'https://m.media-amazon.com/images/M/MV5BMDk2YzA4YzMtNGQ5YS00OGM1LWE5ZjUtN2NjODZhYTQ0YmJkXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg'
         }
       ]
+    }
+  },
+  computed: {
+    movies() {
+      let filteredMovies;
+      
+      if (!this.searchFilters.query && this.searchFilters.genres.length === 0) {
+        filteredMovies = this.allMovies;
+      } else {
+        filteredMovies = this.allMovies.filter(movie => {
+          // Filtrar por título
+          const titleMatch = !this.searchFilters.query || 
+            movie.title.toLowerCase().includes(this.searchFilters.query.toLowerCase());
+          
+          // Filtrar por gêneros
+          const genreMatch = this.searchFilters.genres.length === 0 || 
+            movie.genres.some(genre => this.searchFilters.genres.includes(genre));
+          
+          return titleMatch && genreMatch;
+        });
+      }
+      
+      this.$emit('update:movies', filteredMovies.length);
+      return filteredMovies;
     }
   },
   methods: {
