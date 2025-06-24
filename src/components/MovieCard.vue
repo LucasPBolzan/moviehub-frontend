@@ -1,9 +1,10 @@
+
 <template>
-  <div class="movie-card">
+  <div class="movie-card" @click="emitAvaliar">
     <div class="card-header">
       <div class="poster">
         <img :src="movie.poster || ''" alt="Poster" />
-        <button class="fav-btn" :class="{ favorited: isFavorited }" @click="toggle">
+        <button class="fav-btn" :class="{ favorited: isFavorited }" @click.stop="toggle">
           ♥
         </button>
       </div>
@@ -36,7 +37,8 @@ export default {
       required: true
     }
   },
-  setup(props) {
+  emits: ['avaliar'],
+  setup(props, { emit }) {
     const favStore = useFavoritesStore()
 
     const isFavorited = computed(() =>
@@ -47,7 +49,11 @@ export default {
       favStore.toggleFavorite(props.movie)
     }
 
-    return { isFavorited, toggle }
+    const emitAvaliar = () => {
+      emit('avaliar', props.movie)
+    }
+
+    return { isFavorited, toggle, emitAvaliar }
   }
 }
 </script>
@@ -64,11 +70,9 @@ export default {
 .movie-card:hover {
   transform: scale(1.03);
 }
-
 .card-header {
   position: relative;
 }
-
 .poster {
   height: 240px;
   background-color: #2a2a2a;
@@ -76,7 +80,6 @@ export default {
   align-items: center;
   justify-content: center;
 }
-
 .poster img {
   width: 100%;
   height: 100%;
@@ -138,5 +141,18 @@ h3 {
   padding: 2px 6px;
   font-size: 12px;
   border-radius: 5px;
+}
+.avaliar-btn {
+  margin-top: 10px;
+  background: #3c8dbc;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.avaliar-btn:hover {
+  background: #337ab7;
 }
 </style>

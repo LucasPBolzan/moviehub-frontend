@@ -30,15 +30,29 @@
       </div>
     </section>
 
-    
     <div>
       <MovieCarousel 
         ref="movieCarousel"
         title="Todos os Filmes" 
         :searchFilters="searchFilters" 
         @update:movies="checkResults" 
+        @avaliar="abrirFormulario"
       />
       <p v-if="!hasResults" class="no-results">Nenhum filme encontrado com os critérios de busca.</p>
+    </div>
+
+    <div v-if="filmeSelecionado" class="form-container">
+      <h3>Avaliar: {{ filmeSelecionado.title }}</h3>
+      <label>Nota:</label>
+      <select v-model="nota">
+        <option v-for="n in [1,2,3,4,5]" :key="n" :value="n">{{ n }} ⭐</option>
+      </select>
+
+      <label>Comentário:</label>
+      <textarea v-model="comentario" placeholder="Deixe sua opinião..."></textarea>
+
+      <button @click="enviar">Enviar</button>
+      <button @click="fecharFormulario">Fechar</button>
     </div>
   </div>
 </template>
@@ -62,6 +76,9 @@ export default {
       currentIndex: 0,
       autoplayInterval: null,
       hasResults: true,
+      filmeSelecionado: null,
+      nota: 5,
+      comentario: '',
       featuredMovies: [
         {
           id: 1,
@@ -70,39 +87,10 @@ export default {
           rating: 8.5,
           duration: '2h 46m',
           genres: ['Sci-Fi', 'Adventure', 'Drama'],
-          description: 'Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family.',
+          description: 'Follow the mythic journey of Paul Atreides...',
           backdrop: 'https://m.media-amazon.com/images/M/MV5BODI0YjNhNjUtYjM0My00MTUwLWFlYTMtMWI2NGUzYjNjNGQzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg'
         },
-        {
-          id: 15,
-          title: 'Deadpool & Wolverine',
-          year: 2024,
-          rating: 8.2,
-          duration: '2h 7m',
-          genres: ['Action', 'Adventure', 'Comedy'],
-          description: 'Deadpool enlists the help of Wolverine to save his universe in an epic adventure across the multiverse.',
-          backdrop: 'https://m.media-amazon.com/images/M/MV5BMDk2YzA4YzMtNGQ5YS00OGM1LWE5ZjUtN2NjODZhYTQ0YmJkXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg'
-        },
-        {
-          id: 2,
-          title: 'Oppenheimer',
-          year: 2023,
-          rating: 8.3,
-          duration: '3h 0m',
-          genres: ['Biography', 'Drama', 'History'],
-          description: 'The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.',
-          backdrop: 'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg'
-        },
-        {
-          id: 14,
-          title: 'Godzilla x Kong: The New Empire',
-          year: 2024,
-          rating: 6.5,
-          duration: '1h 55m',
-          genres: ['Action', 'Adventure', 'Sci-Fi'],
-          description: 'Two ancient titans, Godzilla and Kong, clash in an epic battle as humans unravel their intertwined origins and connection to Skull Island mysteries.',
-          backdrop: 'https://m.media-amazon.com/images/M/MV5BYmVlNWJmZWMtNzk3Yy00YjQyLTgzYmYtNzNjOTNkM2NkYjc4XkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg'
-        }
+        // outros filmes...
       ]
     }
   },
@@ -127,9 +115,25 @@ export default {
       clearInterval(this.autoplayInterval)
       this.autoplayInterval = setInterval(this.nextMovie, 8000)
     },
-    // Método updateSearch removido pois agora os filtros vêm como prop
     checkResults(count) {
       this.hasResults = count > 0
+    },
+    abrirFormulario(filme) {
+      this.filmeSelecionado = filme
+      this.nota = 5
+      this.comentario = ''
+    },
+    enviar() {
+      console.log({
+        filme: this.filmeSelecionado,
+        nota: this.nota,
+        comentario: this.comentario
+      })
+      alert(`Obrigado por avaliar!\nFilme: ${this.filmeSelecionado.title}\nNota: ${this.nota}\nComentário: ${this.comentario}`)
+      this.fecharFormulario()
+    },
+    fecharFormulario() {
+      this.filmeSelecionado = null
     }
   },
   mounted() {
@@ -140,6 +144,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .banner {
   color: white;
@@ -176,11 +181,10 @@ export default {
   to { opacity: 1; transform: translateY(0); }
 }
 
-
 .banner-content h1 {
-  font-size: 90px; 
+  font-size: 90px;
   font-weight: bold;
-  margin-bottom: 24px; 
+  margin-bottom: 24px;
   line-height: 1.1;
 }
 
@@ -188,9 +192,9 @@ export default {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px; 
+  gap: 12px;
   margin-bottom: 18px;
-  font-size: 20px; 
+  font-size: 20px;
 }
 
 .movie-info .rating {
@@ -207,7 +211,7 @@ export default {
 
 .banner-content p {
   margin-top: 15px;
-  font-size: 20px; 
+  font-size: 20px;
   line-height: 1.7;
   color: #ccc;
   max-width: 95%;
@@ -223,7 +227,7 @@ export default {
 .play-btn {
   background-color: #e50914;
   color: white;
-  padding: 14px 26px; 
+  padding: 14px 26px;
   border: none;
   border-radius: 6px;
   font-weight: bold;
@@ -299,5 +303,32 @@ export default {
   padding: 40px;
   color: #ccc;
   font-size: 18px;
+}
+
+.form-container {
+  margin: 30px auto;
+  max-width: 500px;
+  padding: 20px;
+  background: #1c1c1c;
+  color: white;
+  border-radius: 10px;
+}
+textarea, select {
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+  background: #2a2a2a;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+button {
+  margin-right: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background: #3c8dbc;
+  color: white;
+  cursor: pointer;
 }
 </style>
