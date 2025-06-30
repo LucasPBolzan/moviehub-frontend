@@ -48,9 +48,15 @@
             </div>
           </div>
         </div>
-        <router-link to="/login" class="user-icon" title="Entrar">
-          👤
-        </router-link>
+        <div class="user-section">
+          <span v-if="currentUser" class="user-name">Olá, {{ currentUser.name }}</span>
+          <router-link v-if="!currentUser" to="/login" class="user-icon" title="Entrar">
+            👤
+          </router-link>
+          <button v-if="currentUser" @click="logout" class="logout-btn" title="Sair">
+            Sair
+          </button>
+        </div>
       </div>
 
     </div>
@@ -73,6 +79,7 @@ export default {
     const searchQuery = ref('')
     const selectedGenres = ref([])
     const showGenreDropdown = ref(false)
+    const currentUser = ref(null)
     const availableGenres = [
       'Action', 'Adventure', 'Animation', 'Biography', 
       'Comedy', 'Crime', 'Drama', 'Romance', 
@@ -113,6 +120,11 @@ export default {
     
     onMounted(() => {
       document.addEventListener('click', handleClickOutside)
+      // Carregar usuário do localStorage
+      const userData = localStorage.getItem('currentUser')
+      if (userData) {
+        currentUser.value = JSON.parse(userData)
+      }
     })
     
     onBeforeUnmount(() => {
@@ -137,6 +149,12 @@ export default {
       updateSearch()
     }
 
+    const logout = () => {
+      localStorage.removeItem('currentUser')
+      currentUser.value = null
+      router.push('/')
+    }
+
     return { 
       totalFavorites, 
       searchQuery, 
@@ -145,11 +163,13 @@ export default {
       showGenreDropdown,
       genreDropdownRef,
       genreButtonRef,
+      currentUser,
       updateSearch,
       toggleGenre,
       clearSearch,
       toggleGenreDropdown,
-      clearGenres
+      clearGenres,
+      logout
     }
   }
 }
@@ -380,5 +400,31 @@ export default {
 
 .user-icon:hover {
   color: #e50914;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-name {
+  color: white;
+  font-size: 16px;
+}
+
+.logout-btn {
+  background-color: #e50914;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #f40612;
 }
 </style>
