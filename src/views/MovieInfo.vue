@@ -205,13 +205,21 @@ export default {
 
       try {
         const reviewData = {
-          movie: { id: this.movie.id },
+          movieId: this.movie.id,
           rating: this.newReview.rating,
           comment: this.newReview.comment,
           userName: currentUser.name
         }
 
-        const response = await axios.post('http://localhost:8080/reviews', reviewData)
+        console.log('Enviando dados:', reviewData)
+        
+        const response = await axios.post('http://localhost:8080/reviews', reviewData, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+
+        console.log('Resposta do servidor:', response.data)
 
         // Atualizar lista de avaliações
         await this.loadReviews()
@@ -223,8 +231,10 @@ export default {
 
         alert('Avaliação enviada com sucesso!')
       } catch (error) {
-        console.error('Erro ao enviar avaliação:', error)
-        alert('Erro ao enviar avaliação. Tente novamente.')
+        console.error('Erro completo:', error)
+        console.error('Resposta do erro:', error.response?.data)
+        console.error('Status do erro:', error.response?.status)
+        alert('Erro ao enviar avaliação: ' + (error.response?.data?.message || error.message))
       }
     }
   }

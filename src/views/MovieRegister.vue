@@ -64,20 +64,40 @@ export default {
         return
       }
 
+      const userData = {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      }
+
+      console.log('Tentando registrar usuário:', userData)
+
       try {
-        await axios.post('http://localhost:8080/users', {
-          name: this.name,
-          email: this.email,
-          password: this.password
+        const response = await axios.post('http://localhost:8080/users', userData, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         })
+        
+        console.log('Usuário registrado com sucesso:', response.data)
         alert('Usuário cadastrado com sucesso!')
+        
+        // Limpar formulário
         this.name = ''
         this.email = ''
         this.password = ''
         this.confirmPassword = ''
-      } catch (err) {
-        console.error(err)
-        alert('Erro ao cadastrar usuário.')
+        
+        // Redirecionar para login
+        this.$router.push('/login')
+        
+      } catch (error) {
+        console.error('Erro completo:', error)
+        console.error('Resposta do erro:', error.response?.data)
+        console.error('Status do erro:', error.response?.status)
+        
+        const errorMessage = error.response?.data?.message || error.message || 'Erro ao cadastrar usuário'
+        alert('Erro: ' + errorMessage)
       }
     }
   }
