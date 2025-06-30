@@ -1,6 +1,5 @@
-
 <template>
-  <div class="movie-card" @click="emitAvaliar">
+  <div class="movie-card" @click="goToDetails">
     <div class="card-header">
       <div class="poster">
         <img :src="movie.poster || ''" alt="Poster" />
@@ -28,6 +27,7 @@
 <script>
 import { useFavoritesStore } from '@/stores/favorites'
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'MovieCard',
@@ -37,9 +37,9 @@ export default {
       required: true
     }
   },
-  emits: ['avaliar'],
-  setup(props, { emit }) {
+  setup(props) {
     const favStore = useFavoritesStore()
+    const router = useRouter()
 
     const isFavorited = computed(() =>
       favStore.isFavorited(props.movie.id)
@@ -49,11 +49,14 @@ export default {
       favStore.toggleFavorite(props.movie)
     }
 
-    const emitAvaliar = () => {
-      emit('avaliar', props.movie)
+    const goToDetails = () => {
+      router.push({
+        name: 'MovieInfo',
+        params: { id: props.movie.id } // ← Corrigido: agora usa params, não query
+      })
     }
 
-    return { isFavorited, toggle, emitAvaliar }
+    return { isFavorited, toggle, goToDetails }
   }
 }
 </script>
@@ -85,7 +88,6 @@ export default {
   height: 100%;
   object-fit: cover;
 }
-
 .fav-btn {
   position: absolute;
   top: 8px;
@@ -103,18 +105,15 @@ export default {
 .fav-btn.favorited {
   color: red;
 }
-
 .card-footer {
   padding: 10px;
   background-color: #0d1117;
 }
-
 h3 {
   font-size: 15px;
   color: white;
   margin-bottom: 6px;
 }
-
 .year-rating {
   font-size: 14px;
   color: #aaa;
@@ -122,19 +121,16 @@ h3 {
   justify-content: space-between;
   align-items: center;
 }
-
 .rating {
   color: #f7c948;
   font-weight: bold;
 }
-
 .genres {
   margin-top: 6px;
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
 }
-
 .genre-tag {
   border: 1px solid #3c3c3c;
   color: #ccc;

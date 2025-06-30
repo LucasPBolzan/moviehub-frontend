@@ -1,12 +1,12 @@
 <template>
   <div class="login-container">
     <h1 class="title">Entrar</h1>
-    <form class="login-form">
+    <form class="login-form" @submit.prevent="login">
       <label>Email</label>
-      <input type="email" placeholder="seuemail@exemplo.com" />
+      <input type="email" v-model="email" placeholder="seuemail@exemplo.com" required />
 
       <label>Senha</label>
-      <input type="password" placeholder="Digite sua senha" />
+      <input type="password" v-model="password" placeholder="Digite sua senha" required />
 
       <button type="submit">Entrar</button>
     </form>
@@ -18,8 +18,40 @@
   </div>
 </template>
 
-<style scoped>
-.login-container {
+<script>
+import axios from 'axios'
+
+export default {
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    async login() {
+      try {
+        const response = await axios.post('http://localhost:8080/users/login', {
+          email: this.email,
+          password: this.password
+        })
+
+        if (response.data) {
+          alert('Login realizado com sucesso!')
+          // Aqui você pode salvar o user no localStorage ou store
+          this.$router.push('/')
+        } else {
+          alert('Email ou senha inválidos.')
+        }
+      } catch (error) {
+        console.error(error)
+        alert('Erro ao tentar fazer login.')
+      }
+    }
+  }
+}
+</script>
+<style scoped>.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,6 +109,28 @@
   transition: background 0.3s;
 }
 
+.login-form button:hover {
+  background: #b20710;
+}
+
+.login-redirect {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+.login-redirect a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 0.3rem;
+  transition: color 0.3s;
+}
+
+.login-redirect a:hover {
+  color: #ffffff;
+}
 .login-form button:hover {
   background: #b20710;
 }
