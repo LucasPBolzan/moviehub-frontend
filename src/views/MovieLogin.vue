@@ -45,6 +45,11 @@ export default {
           }
           localStorage.setItem('currentUser', JSON.stringify(userData))
           
+          // Carregar favoritos do usuário
+          const { useFavoritesStore } = await import('@/stores/favorites')
+          const favStore = useFavoritesStore()
+          favStore.loadUserFavorites()
+          
           alert('Login realizado com sucesso!')
           this.$router.push('/')
         } else {
@@ -59,6 +64,12 @@ export default {
           email: this.email
         }
         localStorage.setItem('currentUser', JSON.stringify(userData))
+        
+        // Carregar favoritos do usuário
+        const { useFavoritesStore } = await import('@/stores/favorites')
+        const favStore = useFavoritesStore()
+        favStore.loadUserFavorites()
+        
         alert('Login simulado realizado com sucesso!')
         this.$router.push('/')
       }

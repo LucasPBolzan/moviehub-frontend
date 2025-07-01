@@ -1,38 +1,24 @@
 <template>
   <div class="favorites">
-    <h1>Favoritos</h1>
-
-    <div v-if="favorites.length === 0">
-      <p>Nenhum filme favoritado ainda.</p>
+    <div class="favorites-header">
+      <h1>Meus Filmes Favoritos</h1>
+      <p v-if="favorites.length > 0" class="favorites-count">{{ favorites.length }} filme{{ favorites.length > 1 ? 's' : '' }} favoritado{{ favorites.length > 1 ? 's' : '' }}</p>
     </div>
 
-    <div v-else>
-      <ul>
-        <li v-for="movie in favorites" :key="movie.id">
-          <MovieCard :movie="movie" @avaliar="selecionarFilme" />
-        </li>
-      </ul>
+    <div v-if="favorites.length === 0" class="empty-state">
+      <div class="empty-icon">♥</div>
+      <h2>Nenhum filme favoritado ainda</h2>
+      <p>Explore nosso catálogo e adicione filmes aos seus favoritos!</p>
+      <router-link to="/" class="browse-btn">Explorar Filmes</router-link>
     </div>
 
-    <div v-if="filmeSelecionado" class="avaliacao-form">
-      <h2>Avaliar: {{ filmeSelecionado.title }}</h2>
-      <form @submit.prevent="enviarAvaliacao">
-        <textarea
-          v-model="comentario"
-          placeholder="Escreva sua avaliação..."
-          required
-        ></textarea>
-        <input
-          type="number"
-          v-model.number="nota"
-          min="1"
-          max="10"
-          placeholder="Nota (1 a 10)"
-          required
-        />
-        <button type="submit">Enviar Avaliação</button>
-        <button @click="cancelar" type="button">Cancelar</button>
-      </form>
+    <div v-else class="favorites-grid">
+      <MovieCard 
+        v-for="movie in favorites" 
+        :key="movie.id" 
+        :movie="movie" 
+        class="favorite-card"
+      />
     </div>
   </div>
 </template>
@@ -40,113 +26,155 @@
 <script>
 import { useFavoritesStore } from '@/stores/favorites'
 import MovieCard from '@/components/MovieCard.vue'
-import axios from 'axios'
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, onMounted } from 'vue'
 
 export default {
   name: 'MovieFavorites',
   components: {
-    MovieCard,
+    MovieCard
   },
   setup() {
     const favStore = useFavoritesStore()
-    const route = useRoute()
 
-    const favorites = ref(favStore.favorites)
-    const filmeSelecionado = ref(null)
-    const comentario = ref('')
-    const nota = ref(null)
+    const favorites = computed(() => favStore.favorites)
 
-    // Se vier filme selecionado via query (ex: de outra página), abre o formulário automaticamente
     onMounted(() => {
-      if (route.query.filmeSelecionado) {
-        try {
-          filmeSelecionado.value = JSON.parse(route.query.filmeSelecionado)
-        } catch {
-          filmeSelecionado.value = null
-        }
-      }
+      // Garantir que os favoritos do usuário estão carregados
+      favStore.loadUserFavorites()
     })
 
-    // Métodos
-    function selecionarFilme(filme) {
-      filmeSelecionado.value = filme
-      comentario.value = ''
-      nota.value = null
-    }
-
-    function cancelar() {
-      filmeSelecionado.value = null
-      comentario.value = ''
-      nota.value = null
-    }
-
-    async function enviarAvaliacao() {
-      try {
-        await axios.post('http://localhost:8080/reviews', {
-          movie: { id: filmeSelecionado.value.id },
-          user: { id: 1 }, // ID fixo temporário, substitua conforme necessidade
-          comment: comentario.value,
-          rating: nota.value,
-        })
-        alert('Avaliação enviada com sucesso!')
-        cancelar()
-      } catch (error) {
-        console.error(error)
-        alert('Erro ao enviar avaliação.')
-      }
-    }
-
     return {
-      favorites,
-      filmeSelecionado,
-      comentario,
-      nota,
-      selecionarFilme,
-      cancelar,
-      enviarAvaliacao,
+      favorites
     }
-  },
+  }
 }
 </script>
 
 <style scoped>
 .favorites {
-  padding: 20px;
+  background-color: #000;
+  min-height: 100vh;
   color: white;
+  padding: 40px 60px;
 }
 
-.avaliacao-form {
-  margin-top: 30px;
-  background-color: #1a1a1a;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
+.favorites-header {
+  margin-bottom: 40px;
+  text-align: center;
 }
 
-.avaliacao-form textarea,
-.avaliacao-form input {
-  width: 100%;
+.favorites-header h1 {
+  font-size: 48px;
+  font-weight: bold;
   margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 5px;
-  border: none;
-  background: #2a2a2a;
-  color: white;
+  background: linear-gradient(45deg, #e50914, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.avaliacao-form button {
-  padding: 8px 12px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ff0000;
-  color: white;
-  cursor: pointer;
+.favorites-count {
+  font-size: 18px;
+  color: #ccc;
+  margin: 0;
 }
 
-.avaliacao-form button:hover {
-  background-color: #cc0000;
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 120px;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.empty-state h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+.empty-state p {
+  font-size: 18px;
+  color: #999;
+  margin-bottom: 30px;
+  max-width: 400px;
+}
+
+.browse-btn {
+  background-color: #e50914;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.browse-btn:hover {
+  background-color: #f40612;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4);
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.favorite-card {
+  transition: transform 0.3s ease;
+}
+
+.favorite-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .favorites-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .favorites {
+    padding: 20px;
+  }
+  
+  .favorites-header h1 {
+    font-size: 32px;
+  }
+  
+  .favorites-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+  }
+  
+  .empty-state h2 {
+    font-size: 24px;
+  }
+  
+  .empty-icon {
+    font-size: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .favorites-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
 }
 </style>
