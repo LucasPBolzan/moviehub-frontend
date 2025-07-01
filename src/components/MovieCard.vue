@@ -52,7 +52,7 @@ export default {
     const goToDetails = () => {
       router.push({
         name: 'MovieInfo',
-        params: { id: props.movie.id } // ← Corrigido: agora usa params, não query
+        params: { id: props.movie.id } 
       })
     }
 

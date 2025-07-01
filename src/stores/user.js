@@ -1,4 +1,4 @@
-// src/stores/user.js
+
 import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', {
@@ -16,5 +16,5 @@ export const useUserStore = defineStore('user', {
       this.user = { id: null, name: '' }
     }
   },
-  persist: true // opcional, para manter o usuário logado
+  persist: true 
 })

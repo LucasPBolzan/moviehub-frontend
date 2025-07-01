@@ -14,9 +14,9 @@
         </div>
         <p>{{ featuredMovies[currentIndex].description }}</p>
         <div class="actions">
-          <button class="play-btn"><i class="play-icon">▶</i> Assistir Trailer</button>
-          <button class="fav-btn"><i class="heart-icon">♥</i> Adicionar aos Favoritos</button>
-          <button class="details-btn"><i class="info-icon">i</i> Ver Detalhes</button>
+          <button class="play-btn" @click="watchTrailer"><i class="play-icon">▶</i> Assistir Trailer</button>
+          <button class="fav-btn" @click="addToFavorites"><i class="heart-icon">♥</i> Adicionar aos Favoritos</button>
+          <button class="details-btn" @click="viewDetails"><i class="info-icon">i</i> Ver Detalhes</button>
         </div>
       </div>
       <div class="banner-indicators">
@@ -87,10 +87,32 @@ export default {
           rating: 8.5,
           duration: '2h 46m',
           genres: ['Sci-Fi', 'Adventure', 'Drama'],
-          description: 'Follow the mythic journey of Paul Atreides...',
-          backdrop: 'https://m.media-amazon.com/images/M/MV5BODI0YjNhNjUtYjM0My00MTUwLWFlYTMtMWI2NGUzYjNjNGQzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg'
+          description: 'Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family.',
+          backdrop: 'https://m.media-amazon.com/images/M/MV5BODI0YjNhNjUtYjM0My00MTUwLWFlYTMtMWI2NGUzYjNjNGQzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg',
+          trailer: 'https://www.youtube.com/watch?v=Way9Dexny3w'
         },
-        // outros filmes...
+        {
+          id: 15,
+          title: 'Deadpool & Wolverine',
+          year: 2024,
+          rating: 8.2,
+          duration: '2h 7m',
+          genres: ['Action', 'Adventure', 'Comedy'],
+          description: 'Deadpool enlists the help of Wolverine to save his universe in an epic adventure across the multiverse.',
+          backdrop: 'https://m.media-amazon.com/images/M/MV5BMDk2YzA4YzMtNGQ5YS00OGM1LWE5ZjUtN2NjODZhYTQ0YmJkXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg',
+          trailer: 'https://www.youtube.com/watch?v=73_1biulkYk'
+        },
+        {
+          id: 2,
+          title: 'Oppenheimer',
+          year: 2023,
+          rating: 8.3,
+          duration: '3h 0m',
+          genres: ['Biography', 'Drama', 'History'],
+          description: 'The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.',
+          backdrop: 'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
+          trailer: 'https://www.youtube.com/watch?v=uYPbbksJxIg'
+        }
       ]
     }
   },
@@ -134,6 +156,26 @@ export default {
     },
     fecharFormulario() {
       this.filmeSelecionado = null
+    },
+    watchTrailer() {
+      const currentMovie = this.featuredMovies[this.currentIndex]
+      if (currentMovie.trailer) {
+        window.open(currentMovie.trailer, '_blank')
+      }
+    },
+    addToFavorites() {
+      const { useFavoritesStore } = require('@/stores/favorites')
+      const favStore = useFavoritesStore()
+      const currentMovie = this.featuredMovies[this.currentIndex]
+      favStore.toggleFavorite(currentMovie)
+      
+      const isFavorited = favStore.isFavorited(currentMovie.id)
+      const message = isFavorited ? 'Adicionado aos favoritos!' : 'Removido dos favoritos!'
+      alert(message)
+    },
+    viewDetails() {
+      const currentMovie = this.featuredMovies[this.currentIndex]
+      this.$router.push(`/movie/${currentMovie.id}`)
     }
   },
   mounted() {

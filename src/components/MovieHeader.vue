@@ -154,7 +154,6 @@ export default {
     const logout = () => {
       localStorage.removeItem('currentUser')
       currentUser.value = null
-      // Limpar favoritos ao fazer logout
       favStore.favorites = []
       router.push('/')
     }

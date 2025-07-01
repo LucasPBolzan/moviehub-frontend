@@ -11,8 +11,8 @@ const routes = [
   { path: '/favorites', name: 'Favorites', component: MovieFavorites },
   { path: '/register', name: 'Register', component: MovieRegister },
   { path: '/login', name: 'Login', component: MovieLogin },
-  { path: '/movie/:id', name: 'MovieInfo', component: MovieInfo },  // com id
-  { path: '/review/:id', name: 'MovieReview', component: MovieReview }  // CORRIGIDO aqui
+  { path: '/movie/:id', name: 'MovieInfo', component: MovieInfo },
+  { path: '/review/:id', name: 'MovieReview', component: MovieReview }  
 ]
 
 const router = createRouter({
