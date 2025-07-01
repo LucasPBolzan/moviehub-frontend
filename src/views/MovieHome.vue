@@ -16,7 +16,7 @@
         <div class="actions">
           <button class="play-btn" @click="watchTrailer"><i class="play-icon">▶</i> Assistir Trailer</button>
           <button class="fav-btn" @click="addToFavorites"><i class="heart-icon">♥</i> Adicionar aos Favoritos</button>
-          <button class="details-btn" @click="viewDetails"><i class="info-icon">i</i> Ver Detalhes</button>
+          <button class="details-btn" @click="viewDetails"><i class="info-icon"></i> Ver Detalhes</button>
         </div>
       </div>
       <div class="banner-indicators">
@@ -80,39 +80,21 @@ export default {
       nota: 5,
       comentario: '',
       featuredMovies: [
-        {
-          id: 1,
-          title: 'Dune: Part Two',
-          year: 2024,
-          rating: 8.5,
-          duration: '2h 46m',
-          genres: ['Sci-Fi', 'Adventure', 'Drama'],
-          description: 'Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family.',
-          backdrop: 'https://m.media-amazon.com/images/M/MV5BODI0YjNhNjUtYjM0My00MTUwLWFlYTMtMWI2NGUzYjNjNGQzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_.jpg',
-          trailer: 'https://www.youtube.com/watch?v=Way9Dexny3w'
-        },
-        {
-          id: 15,
-          title: 'Deadpool & Wolverine',
-          year: 2024,
-          rating: 8.2,
-          duration: '2h 7m',
-          genres: ['Action', 'Adventure', 'Comedy'],
-          description: 'Deadpool enlists the help of Wolverine to save his universe in an epic adventure across the multiverse.',
-          backdrop: 'https://m.media-amazon.com/images/M/MV5BMDk2YzA4YzMtNGQ5YS00OGM1LWE5ZjUtN2NjODZhYTQ0YmJkXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg',
-          trailer: 'https://www.youtube.com/watch?v=73_1biulkYk'
-        },
-        {
-          id: 2,
-          title: 'Oppenheimer',
-          year: 2023,
-          rating: 8.3,
-          duration: '3h 0m',
-          genres: ['Biography', 'Drama', 'History'],
-          description: 'The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.',
-          backdrop: 'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg',
-          trailer: 'https://www.youtube.com/watch?v=uYPbbksJxIg'
-        }
+        { id: 1, title: 'Dune: Part Two', year: 2024, rating: 8.5, duration: '2h 46m', genres: ['Sci-Fi', 'Adventure'], description: 'Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family.', backdrop: 'https://i.ytimg.com/vi/53BBRKF-L60/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGH8gQygTMA8=&rs=AOn4CLDgS78KBd_b20u0o-YBvLDGs6De2A', trailer: 'https://www.youtube.com/watch?v=Way9Dexny3w' },
+        { id: 2, title: 'Oppenheimer', year: 2023, rating: 8.3, duration: '3h 0m', genres: ['Biography', 'Drama'], description: 'The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.', backdrop: 'https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=uYPbbksJxIg' },
+        { id: 3, title: 'Barbie', year: 2023, rating: 7.0, duration: '1h 54m', genres: ['Comedy', 'Adventure'], description: 'Barbie and Ken are having the time of their lives in the colorful and seemingly perfect world of Barbie Land.', backdrop: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=pBk4NYhWNMM' },
+        { id: 4, title: 'Spider-Man: Across the Spider-Verse', year: 2023, rating: 8.7, duration: '2h 20m', genres: ['Animation', 'Action'], description: 'After reuniting with Gwen Stacy, Miles Morales finds himself catapulted across the Multiverse, where he encounters a team of Spider-People.', backdrop: 'https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=cqGjhVJWtEg' },
+        { id: 5, title: 'John Wick: Chapter 4', year: 2023, rating: 7.7, duration: '2h 49m', genres: ['Action', 'Thriller'], description: 'John Wick uncovers a path to defeating The High Table. But before he can earn his freedom, Wick must face off against a new enemy.', backdrop: 'https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00NGIwLWJhMTEtOTdkZGFjNmZiMTEwXkEyXkFqcGdeQXVyMjM4NTM5NDY@._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=qEVUtrk8_B4' },
+        { id: 6, title: 'Avatar: The Way of Water', year: 2022, rating: 7.6, duration: '3h 12m', genres: ['Sci-Fi', 'Adventure'], description: 'Set more than a decade after the events of the first film, Avatar: The Way of Water begins to tell the story of the Sully family.', backdrop: 'https://m.media-amazon.com/images/M/MV5BYjhiNjBlODctY2ZiOC00YjVlLWFlNzAtNTVhNzM1YjI1NzMxXkEyXkFqcGdeQXVyMjQxNTE1MDA@._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=d9MyW72ELq0' },
+        { id: 7, title: 'The Batman', year: 2022, rating: 8.0, duration: '2h 56m', genres: ['Action', 'Drama'], description: 'When the Riddler, a sadistic serial killer, begins murdering key political figures in Gotham, Batman is forced to investigate the citys hidden corruption.', backdrop: 'https://blogs.uai.com.br/opipoqueiro/wp-content/uploads/sites/54/2022/02/Batman-01.jpg', trailer: 'https://www.youtube.com/watch?v=mqqft2x_Aa4' },
+        { id: 8, title: 'Everything Everywhere All at Once', year: 2022, rating: 8.1, duration: '2h 19m', genres: ['Comedy', 'Sci-Fi'], description: 'An aging Chinese immigrant is swept up in an insane adventure, where she alone can save what is important to her by connecting with the lives she could have led.', backdrop: 'https://m.media-amazon.com/images/M/MV5BYTdiOTIyZTQtNmQ1OS00NjZlLWIyMTgtYzk5Y2M3ZDVmMDk1XkEyXkFqcGdeQXVyMTAzMDg4NzU0._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=WLJJXKWACNw' },
+        { id: 9, title: 'The Whale', year: 2022, rating: 7.8, duration: '1h 57m', genres: ['Drama'], description: 'A reclusive, morbidly obese English teacher attempts to reconnect with his estranged teenage daughter.', backdrop: 'https://m.media-amazon.com/images/M/MV5BZDQ4Njg4YTctNGZkYi00NWU1LWI4OTYtNmNjOWMyMjI1NWYzXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=yGKyCkNL85o' },
+        { id: 10, title: 'Top Gun: Maverick', year: 2022, rating: 8.3, duration: '2h 11m', genres: ['Action', 'Drama'], description: 'After thirty years, Maverick is still pushing the envelope as a top naval aviator, but must confront ghosts of his past when he leads TOP GUNs elite graduates on a mission.', backdrop: 'https://m.media-amazon.com/images/M/MV5BZWYzOGEwNTgtNWU3NS00ZTQ0LWJkODUtMmVhMjIwMjA1ZmQwXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=giXco2jaZ_4' },
+        { id: 11, title: 'Killers of the Flower Moon', year: 2023, rating: 7.7, duration: '3h 26m', genres: ['Crime', 'Drama'], description: 'When oil is discovered in 1920s Oklahoma under Osage Nation land, the Osage people are murdered one by one - until the FBI steps in to unravel the mystery.', backdrop: 'https://www.kaiakpj.it/wp-content/uploads/2024/02/Flower-Moon-horiz.jpg', trailer: 'https://www.youtube.com/watch?v=EP34Yoxs3FQ' },
+        { id: 12, title: 'Poor Things', year: 2023, rating: 8.0, duration: '2h 21m', genres: ['Comedy', 'Drama', 'Romance'], description: 'The incredible tale of Bella Baxter, a young woman brought back to life by the brilliant and unorthodox scientist Dr. Godwin Baxter.', backdrop: 'https://m.media-amazon.com/images/M/MV5BNGIyYWMzNjktNDE3MC00YWQyLWEyMmEtN2ZmNzZhZDk3NGJlXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=RlbR5N6veqw' },
+        { id: 13, title: 'The Holdovers', year: 2023, rating: 7.9, duration: '2h 13m', genres: ['Comedy', 'Drama'], description: 'A cranky history teacher at a remote prep school is forced to remain on campus over the holidays with a brainy but damaged student.', backdrop: 'https://m.media-amazon.com/images/M/MV5BNDc2MzNkMjMtZDY5NC00NmQ0LWI1NjctZjRhNWIzZjc4MGRiXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_.jpg', trailer: 'https://www.youtube.com/watch?v=VjUt7E-6WpU' },
+        { id: 14, title: 'Godzilla x Kong: The New Empire', year: 2024, rating: 6.5, duration: '1h 55m', genres: ['Action', 'Adventure', 'Sci-Fi'], description: 'Two ancient titans, Godzilla and Kong, clash in an epic battle as humans unravel their intertwined origins and connection to Skull Island mysteries.', backdrop: 'https://cdn.ome.lt/96h-1vw_vWlSFZXvRS1P_BkVhUs=/570x0/smart/uploads/conteudo/fotos/CAPA-godzilla-vs-kong_3nvSvre.png', trailer: 'https://www.youtube.com/watch?v=lV1OOlGwExM' },
+        { id: 15, title: 'Deadpool & Wolverine', year: 2024, rating: 8.2, duration: '2h 7m', genres: ['Action', 'Adventure', 'Comedy'], description: 'Deadpool enlists the help of Wolverine to save his universe in an epic adventure across the multiverse.', backdrop: 'https://s2-g1.glbimg.com/k6J0DsMl3_w3evhEsSfoP4348Tg=/0x0:1080x1350/1008x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2024/4/m/NsJJlvTLCRvEs8KBowrw/deadpool-e-wolverine-cartaz.jpg', trailer: 'https://www.youtube.com/watch?v=73_1biulkYk' }
       ]
     }
   },

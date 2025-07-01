@@ -11,7 +11,9 @@
 <script>
 import MovieHeader from './components/MovieHeader.vue'
 import MovieFooter from './components/MovieFooter.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useUserStore } from './stores/user'
+import { useFavoritesStore } from './stores/favorites'
 
 export default {
   components: {
@@ -23,10 +25,23 @@ export default {
       query: '',
       genres: []
     })
+    
+    const userStore = useUserStore()
+    const favoritesStore = useFavoritesStore()
 
     const updateSearch = (filters) => {
       searchFilters.value = filters
     }
+    
+    onMounted(async () => {
+      // Carregar usuário do localStorage na inicialização
+      userStore.loadUserFromStorage()
+      
+      // Carregar favoritos se usuário estiver logado
+      if (userStore.isLoggedIn) {
+        await favoritesStore.loadUserFavorites()
+      }
+    })
 
     return {
       searchFilters,

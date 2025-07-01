@@ -19,7 +19,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { useUserStore } from '@/stores/user'
+import { useFavoritesStore } from '@/stores/favorites'
 
 export default {
   data() {
@@ -28,51 +29,32 @@ export default {
       password: ''
     }
   },
+  setup() {
+    const userStore = useUserStore()
+    const favoritesStore = useFavoritesStore()
+    
+    return {
+      userStore,
+      favoritesStore
+    }
+  },
   methods: {
     async login() {
-      try {
-        const response = await axios.post('http://localhost:8080/users/login', {
-          email: this.email,
-          password: this.password
-        })
-
-        if (response.data) {
-          // Salvar usuário no localStorage
-          const userData = {
-            id: response.data.id || 1,
-            name: response.data.name || this.email.split('@')[0],
-            email: this.email
-          }
-          localStorage.setItem('currentUser', JSON.stringify(userData))
-          
-          // Carregar favoritos do usuário
-          const { useFavoritesStore } = await import('@/stores/favorites')
-          const favStore = useFavoritesStore()
-          favStore.loadUserFavorites()
-          
-          alert('Login realizado com sucesso!')
-          this.$router.push('/')
-        } else {
-          alert('Email ou senha inválidos.')
-        }
-      } catch (error) {
-        console.error(error)
-        // Para teste, vamos simular um login bem-sucedido
-        const userData = {
-          id: 1,
-          name: this.email.split('@')[0],
-          email: this.email
-        }
-        localStorage.setItem('currentUser', JSON.stringify(userData))
-        
-        // Carregar favoritos do usuário
-        const { useFavoritesStore } = await import('@/stores/favorites')
-        const favStore = useFavoritesStore()
-        favStore.loadUserFavorites()
-        
-        alert('Login simulado realizado com sucesso!')
-        this.$router.push('/')
+      // Simular login (já que não temos backend de usuários)
+      const userData = {
+        id: Date.now(), // ID único baseado no timestamp
+        name: this.email.split('@')[0],
+        email: this.email
       }
+      
+      // Usar o store para fazer login
+      this.userStore.login(userData)
+      
+      // Carregar favoritos do usuário
+      await this.favoritesStore.loadUserFavorites()
+      
+      alert('Login realizado com sucesso!')
+      this.$router.push('/')
     }
   }
 }

@@ -65,6 +65,7 @@
 
 <script>
 import { useFavoritesStore } from '@/stores/favorites'
+import { useUserStore } from '@/stores/user'
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -74,19 +75,20 @@ export default {
   emits: ['search'],
   setup(props, { emit }) {
     const favStore = useFavoritesStore()
+    const userStore = useUserStore()
     const router = useRouter()
     
     const searchQuery = ref('')
     const selectedGenres = ref([])
     const showGenreDropdown = ref(false)
-    const currentUser = ref(null)
     const availableGenres = [
       'Action', 'Adventure', 'Animation', 'Biography', 
       'Comedy', 'Crime', 'Drama', 'Romance', 
       'Sci-Fi', 'Thriller'
     ]
 
-    const totalFavorites = computed(() => favStore.favorites.length)
+    const totalFavorites = computed(() => favStore.favoriteMovies.length)
+    const currentUser = computed(() => userStore.user.name ? userStore.user : null)
 
     const updateSearch = () => {
       emit('search', {
@@ -120,13 +122,6 @@ export default {
     
     onMounted(() => {
       document.addEventListener('click', handleClickOutside)
-      // Carregar usuário do localStorage
-      const userData = localStorage.getItem('currentUser')
-      if (userData) {
-        currentUser.value = JSON.parse(userData)
-        // Carregar favoritos do usuário
-        favStore.loadUserFavorites()
-      }
     })
     
     onBeforeUnmount(() => {
@@ -152,9 +147,9 @@ export default {
     }
 
     const logout = () => {
-      localStorage.removeItem('currentUser')
-      currentUser.value = null
+      userStore.logout()
       favStore.favorites = []
+      favStore.favoriteMovies = []
       router.push('/')
     }
 

@@ -36,11 +36,11 @@ export default {
   setup() {
     const favStore = useFavoritesStore()
 
-    const favorites = computed(() => favStore.favorites)
+    const favorites = computed(() => favStore.favoriteMovies)
 
-    onMounted(() => {
+    onMounted(async () => {
       // Garantir que os favoritos do usuário estão carregados
-      favStore.loadUserFavorites()
+      await favStore.loadUserFavorites()
     })
 
     return {
