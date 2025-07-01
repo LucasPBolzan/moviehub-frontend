@@ -4,8 +4,8 @@
 
       <div class="left-side">
         <div class="logo">
-          <img src="@/assets/logo.png" alt="MovieCatalog Logo" />
-          <span>MovieCatalog</span>
+          <img src="@/assets/logo.png" alt="MovieHub Logo" />
+          <span>MovieHub</span>
         </div>
         <nav class="nav-links">
           <router-link to="/" active-class="active">Filmes</router-link>
